@@ -1,14 +1,18 @@
 name: auto check
 
+permissions:
+  contents: read
+  actions: write
+
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths-ignore:
       - 'README.md'
       - 'imgs/'
   schedule:
-    - cron: '0 4,10 * * *'
+    - cron: '17 4,10 * * *'
   watch:
     types: started
 
