@@ -33,7 +33,8 @@ Glados迁移至railgun.info 以前的积分失效清零 也无法再登录glados
 
 ![图片加载失败](imgs/3.png)
 
-- 多账号请在 `COOKIES` 中 添加多个 `cookies` 中间使用 `&`连接即可。（例如： `c1&c3&c3...`）
+- 多账号推荐新增一个 `repository secret`，命名为 `RAILGUN_COOKIES_2`，填入第二个账号的 Cookie。原账号的 `RAILGUN_COOKIES` 不必修改；两个账号将在同一次定时任务中分别签到。
+- 也兼容原有方式：在 `RAILGUN_COOKIES` 中使用英文 `&` 分隔多个账号的 Cookie。请勿将真实 Cookie 提交到仓库源码。
 
 3. 配置积分兑换策略（非必须）
 
