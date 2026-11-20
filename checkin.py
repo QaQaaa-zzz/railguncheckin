@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 # ENVIRONMENT
 ENV_PUSH_KEY = "PUSHDEER_SENDKEY"
 ENV_COOKIES = "RAILGUN_COOKIES"
+ENV_COOKIES_EXTRA = "RAILGUN_COOKIES_2"
 ENV_EXCHANGE_PLAN = "EXCHANGE_PLAN"
 
 # API URLs
@@ -50,6 +51,7 @@ EXCHANGE_POINTS = {"plan100": 100, "plan200": 200, "plan500": 500}
 def load_config() -> Tuple[str, List[str], str]:
     push_key_env = os.environ.get(ENV_PUSH_KEY)
     raw_cookies_env = os.environ.get(ENV_COOKIES)
+    extra_cookies_env = os.environ.get(ENV_COOKIES_EXTRA)
     exchange_plan_env = os.environ.get(ENV_EXCHANGE_PLAN)
 
     if not push_key_env:
@@ -65,6 +67,10 @@ def load_config() -> Tuple[str, List[str], str]:
         cookies_list = [cookie.strip() for cookie in raw_cookies_env.split('&') if cookie.strip()]
         if not cookies_list:
             raise ValueError(f"环境变量 '{ENV_COOKIES}' 已设置，但未包含任何有效的 Cookie。")
+
+    # Optional second account stored in its own GitHub Actions secret.
+    if extra_cookies_env:
+        cookies_list.extend(cookie.strip() for cookie in extra_cookies_env.split('&') if cookie.strip())
 
     if not exchange_plan_env:
         logger.warning(f"环境变量 '{ENV_EXCHANGE_PLAN}' 未设置，将使用默认兑换计划 'plan500'。")
